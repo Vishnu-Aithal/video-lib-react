@@ -10,44 +10,34 @@ import {
     Playlists,
     SignIn,
     SignUp,
+    NotFound,
 } from "routes";
+import { ProtectedAuth, ProtectedRoute } from "./ProtectedRoute";
 
 export const ConditionalRouter = () => {
     const {
         authState: { isLoggedIn },
     } = useAuth();
-    console.log(isLoggedIn);
     return (
         <Routes>
             <Route path="/" element={<App />}>
                 <Route index element={<HomePage />} />
                 <Route path="/browse/:category" element={<Browse />} />
-                <Route
-                    path="/liked-videos"
-                    element={isLoggedIn ? <LikedVideos /> : <SignIn />}
-                />
-
-                <Route
-                    path="/history"
-                    element={isLoggedIn ? <History /> : <SignIn />}
-                />
-                <Route
-                    path="/watch-later"
-                    element={isLoggedIn ? <WatchLater /> : <SignIn />}
-                />
-                <Route
-                    path="/playlists/:playlist"
-                    element={isLoggedIn ? <Playlists /> : <SignIn />}
-                />
-                <Route
-                    path="/sign-in"
-                    element={isLoggedIn ? <Browse /> : <SignIn />}
-                />
-                <Route
-                    path="/sign-up"
-                    element={isLoggedIn ? <Browse /> : <SignUp />}
-                />
+                <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
+                    <Route path="/liked-videos" element={<LikedVideos />} />
+                    <Route path="/history" element={<History />} />
+                    <Route path="/watch-later" element={<WatchLater />} />
+                    <Route
+                        path="/playlists/:playlist"
+                        element={<Playlists />}
+                    />
+                </Route>
+                <Route element={<ProtectedAuth isLoggedIn={isLoggedIn} />}>
+                    <Route path="/sign-in" element={<SignIn />} />
+                    <Route path="/sign-up" element={<SignUp />} />
+                </Route>
             </Route>
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 };

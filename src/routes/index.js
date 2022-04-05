@@ -6,3 +6,4 @@ export { LikedVideos } from "routes/LikedVideos";
 export { Playlists } from "routes/Playlists";
 export { SignIn } from "routes/SignIn";
 export { SignUp } from "routes/SignUp";
+export { NotFound } from "routes/NotFound";
