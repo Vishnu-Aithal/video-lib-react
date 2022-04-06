@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { usePlaylists } from "contexts/playlist-context";
 export const SideBar = () => {
     const [mainCollapsed, setMainCollapsed] = useState(true);
     const [subCollapsed, setSubCollapsed] = useState(true);
-
+    const {
+        playlistsState: { playlists },
+    } = usePlaylists();
     return (
         <aside
             className={`side-bar shadow-sm p-2 clr-primary ${
@@ -15,7 +18,7 @@ export const SideBar = () => {
                     !mainCollapsed ? "active" : ""
                 }`}
                 onClick={() => setMainCollapsed((collapsed) => !collapsed)}>
-                <i className="fas fa-chevron-up"></i>
+                <i className="fas fa-chevron-up me-2"></i>
             </button>
 
             <ul
@@ -28,7 +31,7 @@ export const SideBar = () => {
                                 : "side-bar__link"
                         }
                         to="/">
-                        Featured
+                        <i className="fas fa-fire-alt me-2"></i>Featured
                     </NavLink>
                 </li>
 
@@ -39,8 +42,8 @@ export const SideBar = () => {
                                 ? "side-bar__link side-bar__link--active"
                                 : "side-bar__link"
                         }
-                        to="/browse/all">
-                        Browse Videos
+                        to="/browse">
+                        <i className="fab fa-wpexplorer me-2"></i>Browse Videos
                     </NavLink>
                 </li>
                 <li className="side-bar__item my-1">
@@ -51,7 +54,7 @@ export const SideBar = () => {
                                 : "side-bar__link"
                         }
                         to="/liked-videos">
-                        Liked Videos
+                        <i className="far fa-heart me-2"></i>Liked Videos
                     </NavLink>
                 </li>
                 <li className="side-bar__item my-1">
@@ -62,7 +65,7 @@ export const SideBar = () => {
                                 : "side-bar__link"
                         }
                         to="/history">
-                        Watch History
+                        <i className="fas fa-history me-2"></i>Watch History
                     </NavLink>
                 </li>
                 <li className="side-bar__item my-1">
@@ -73,7 +76,7 @@ export const SideBar = () => {
                                 : "side-bar__link"
                         }
                         to="/watch-later">
-                        Watch Later
+                        <i className="far fa-bookmark me-2"></i>Watch Later
                     </NavLink>
                 </li>
 
@@ -85,8 +88,8 @@ export const SideBar = () => {
                         onClick={() =>
                             setSubCollapsed((collapsed) => !collapsed)
                         }>
-                        Playlists
-                        <i className="ms-2 fas fa-chevron-right"></i>
+                        <i className="far fa-list-alt me-2"></i>Playlists
+                        <i className="ms-2 fas fa-chevron-right me-2"></i>
                     </div>
 
                     <ul
@@ -104,28 +107,21 @@ export const SideBar = () => {
                                 All Playlists
                             </NavLink>
                         </li>
-                        <li className="side-bar__item my-1">
-                            <NavLink
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "side-bar__link side-bar__link--active"
-                                        : "side-bar__link"
-                                }
-                                to="">
-                                Playlist 1
-                            </NavLink>
-                        </li>
-                        <li className="side-bar__item my-1">
-                            <NavLink
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? "side-bar__link side-bar__link--active"
-                                        : "side-bar__link"
-                                }
-                                to="">
-                                Playlist 2
-                            </NavLink>
-                        </li>
+                        {playlists.map((playlist) => (
+                            <li
+                                key={playlist._id}
+                                className="side-bar__item my-1">
+                                <NavLink
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "side-bar__link side-bar__link--active"
+                                            : "side-bar__link"
+                                    }
+                                    to={`playlists/${playlist._id}`}>
+                                    {playlist.title}
+                                </NavLink>
+                            </li>
+                        ))}
                     </ul>
                 </li>
             </ul>
