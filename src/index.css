@@ -73,6 +73,19 @@ aside {
     backface-visibility: none;
 }
 
+.card__drop-down {
+    position: absolute;
+    transform: translate(10%, 100%);
+    bottom: 0;
+    right: 0;
+    display: none;
+    z-index: 1;
+}
+
+.card__drop-down.show {
+    display: flex;
+}
+
 @keyframes loading {
     0% {
         transform: scale(1);
