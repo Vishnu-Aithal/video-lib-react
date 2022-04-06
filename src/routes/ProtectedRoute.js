@@ -1,8 +1,12 @@
-import { SignIn } from "routes";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
 
 export const ProtectedRoute = ({ isLoggedIn }) => {
-    return isLoggedIn ? <Outlet /> : <SignIn />;
+    const location = useLocation();
+    return isLoggedIn ? (
+        <Outlet />
+    ) : (
+        <Navigate to="/sign-in" state={{ from: location.pathname }} replace />
+    );
 };
 
 export const ProtectedAuth = ({ isLoggedIn }) => {
