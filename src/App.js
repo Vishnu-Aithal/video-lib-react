@@ -3,6 +3,7 @@ import { TopNav } from "components/TopNav";
 import { Outlet } from "react-router-dom";
 import { SideBar } from "components/SideBar";
 import { Loader } from "components/Loader";
+import { PlaylistModal } from "components/PlaylistModal";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <div className="content">
                     <Outlet />
                 </div>
+                <PlaylistModal />
             </main>
         </div>
     );
