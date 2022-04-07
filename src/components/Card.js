@@ -148,15 +148,17 @@ export const Card = ({
                     </>
                 ) : (
                     <>
-                        <button
-                            className="btn btn--primary br-1 w-100p"
+                        <a
+                            href={data.url}
+                            target="_blank"
+                            className="btn btn--primary br-1 w-100p btn--link"
                             onClick={() => {
                                 !inHistory(history, data) &&
                                     isLoggedIn &&
                                     addToHistory(token, data, userDispatch);
                             }}>
                             Watch Now
-                        </button>
+                        </a>
                         {type !== "liked" &&
                             (inLikes(likes, data) ? (
                                 <button
