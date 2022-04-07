@@ -19,9 +19,12 @@ export const SignInForm = () => {
                         hideLoader
                     );
                     if (response) {
-                        location.state.from !== "/sign-in"
-                            ? navigate(location.state.from)
-                            : navigate("/");
+                        if (location.state) {
+                            debugger;
+                            navigate(location.state.from);
+                        } else {
+                            navigate("/");
+                        }
                         authDispatch({
                             type: "LOGIN",
                             payload: response,
@@ -77,9 +80,12 @@ export const SignInForm = () => {
                             hideLoader
                         );
                         if (response) {
-                            location?.state?.from !== "/sign-in"
-                                ? navigate(location.state.from)
-                                : navigate("/");
+                            if (location.state) {
+                                debugger;
+                                navigate(location.state.from);
+                            } else {
+                                navigate("/");
+                            }
                             authDispatch({ type: "LOGIN", payload: response });
                         }
                     }}>
