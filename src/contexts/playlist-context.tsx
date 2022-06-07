@@ -1,42 +1,52 @@
-import { useContext, createContext, useReducer, useEffect } from "react";
+import React, { useContext, createContext, useReducer, useEffect } from "react";
 import { useAuth } from "contexts/auth-context";
 import { useLoader } from "contexts/loader-context";
 
 import {
     initialState,
     playlistsReducerFunction,
-} from "reducer-functions/playlistsReducer";
+    PlaylistState,
+} from "reducer-functions/PlaylistReducer/playlistsReducer";
 
 import {
     loadPlaylists,
     resetPlaylists,
 } from "utility-functions/playlistHandler";
+import { PlaylistActions } from "reducer-functions/PlaylistReducer/playlistActionTypes";
 
-const PlaylistsContext = createContext();
+interface PlaylistsContextValue {
+    playlistsState: PlaylistState;
+    playlistsDispatch: React.Dispatch<PlaylistActions>;
+}
 
-export const PlaylistProvider = ({ children }) => {
+const PlaylistsContext = createContext<PlaylistsContextValue>({
+    playlistsState: initialState,
+    playlistsDispatch: () => {},
+});
+
+export const PlaylistProvider: React.FC<React.PropsWithChildren> = ({
+    children,
+}) => {
     const [playlistsState, playlistsDispatch] = useReducer(
         playlistsReducerFunction,
         initialState
     );
 
-    const {
-        authState: { isLoggedIn, token },
-    } = useAuth();
+    const { authState } = useAuth();
     const { showLoader, hideLoader } = useLoader();
 
     useEffect(() => {
         (async () => {
-            isLoggedIn
+            authState.isLoggedIn
                 ? loadPlaylists(
-                      token,
+                      authState.token,
                       playlistsDispatch,
                       showLoader,
                       hideLoader
                   )
                 : resetPlaylists(playlistsDispatch);
         })();
-    }, [isLoggedIn]);
+    }, [authState, showLoader, hideLoader]);
 
     return (
         <PlaylistsContext.Provider

@@ -1,34 +1,53 @@
-import { useContext, createContext, useReducer, useEffect } from "react";
+import {
+    useContext,
+    createContext,
+    useReducer,
+    useEffect,
+    PropsWithChildren,
+} from "react";
 import { useAuth } from "contexts/auth-context";
 import { useLoader } from "contexts/loader-context";
 
 import {
     initialState,
     userReducerFunction,
-} from "reducer-functions/userReducer";
+    UserState,
+} from "reducer-functions/UserReducer/userReducer";
 
 import { loadUserData, resetUserData } from "utility-functions/userHandler";
+import { UserActions } from "reducer-functions/UserReducer/userActionTypes";
 
-const UserContext = createContext();
+interface UserContextValue {
+    userState: UserState;
+    userDispatch: React.Dispatch<UserActions>;
+}
 
-export const UserProvider = ({ children }) => {
+const UserContext = createContext<UserContextValue>({
+    userState: initialState,
+    userDispatch: () => {},
+});
+
+export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [userState, userDispatch] = useReducer(
         userReducerFunction,
         initialState
     );
 
-    const {
-        authState: { isLoggedIn, token },
-    } = useAuth();
+    const { authState } = useAuth();
     const { showLoader, hideLoader } = useLoader();
 
     useEffect(() => {
         (async () => {
-            isLoggedIn
-                ? loadUserData(token, userDispatch, showLoader, hideLoader)
+            authState.isLoggedIn
+                ? loadUserData(
+                      authState.token,
+                      userDispatch,
+                      showLoader,
+                      hideLoader
+                  )
                 : resetUserData(userDispatch);
         })();
-    }, [isLoggedIn]);
+    }, [showLoader, hideLoader, authState]);
 
     return (
         <UserContext.Provider value={{ userState, userDispatch }}>

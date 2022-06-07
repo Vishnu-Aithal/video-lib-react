@@ -1,4 +1,16 @@
-export const initialState = {
+import { PlaylistType } from "types/Playlist";
+import { VideoDetails } from "types/VideoDetails";
+import { PlaylistActions } from "./playlistActionTypes";
+
+export interface PlaylistState {
+    playlists: PlaylistType[];
+    modalSettings: {
+        currentVideo: VideoDetails | {};
+        modalOpen: boolean;
+    };
+}
+
+export const initialState: PlaylistState = {
     playlists: [],
     modalSettings: {
         currentVideo: {},
@@ -6,24 +18,30 @@ export const initialState = {
     },
 };
 
-export const playlistsReducerFunction = (state, { type, payload }) => {
+export const playlistsReducerFunction = (
+    state: PlaylistState,
+    action: PlaylistActions
+) => {
+    const type = action.type;
     switch (type) {
         case "LOAD_PLAYLISTS":
             return {
                 ...state,
-                playlists: payload,
+                playlists: action.payload,
             };
         case "SET_PLAYLISTS":
             return {
                 ...state,
-                playlists: payload,
+                playlists: action.payload,
             };
 
         case "SET_PLAYLIST":
             return {
                 ...state,
                 playlists: state.playlists.map((playlist) =>
-                    playlist._id === payload._id ? payload : playlist
+                    playlist._id === action.payload._id
+                        ? action.payload
+                        : playlist
                 ),
             };
 
@@ -35,7 +53,10 @@ export const playlistsReducerFunction = (state, { type, payload }) => {
         case "OPEN_MODAL":
             return {
                 ...state,
-                modalSettings: { currentVideo: payload, modalOpen: true },
+                modalSettings: {
+                    currentVideo: action.payload,
+                    modalOpen: true,
+                },
             };
         case "CLOSE_MODAL":
             return {
