@@ -3,9 +3,10 @@ import { deletePlaylist } from "utility-functions/playlistHandler";
 import { usePlaylists } from "contexts/playlist-context";
 import { useAuth } from "contexts/auth-context";
 import { useLoader } from "contexts/loader-context";
+import { PlaylistType } from "types/Playlist";
 
-export const Playlist = ({
-    playlistData = { _id: "adifsuh378qf", title: "My Playlist", videos: [] },
+export const Playlist: React.FC<{ playlistData: PlaylistType }> = ({
+    playlistData,
 }) => {
     const { playlistsDispatch } = usePlaylists();
     const {
@@ -28,7 +29,7 @@ export const Playlist = ({
                 className="playlist__delete btn btn--secondary btn--icon br-2 ms-4"
                 onClick={() =>
                     deletePlaylist(
-                        token,
+                        token!,
                         playlistData,
                         playlistsDispatch,
                         showLoader,

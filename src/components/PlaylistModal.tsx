@@ -11,14 +11,11 @@ import {
     playlistNameExists,
 } from "utility-functions/playlistHandler";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-export const PlaylistModal = () => {
+export const PlaylistModal: React.FC = () => {
     const {
-        playlistsState: {
-            playlists,
-            modalSettings: { modalOpen, currentVideo },
-        },
+        playlistsState: { playlists, modalSettings },
         playlistsDispatch,
     } = usePlaylists();
     const {
@@ -29,12 +26,13 @@ export const PlaylistModal = () => {
     return (
         <div
             className="modal"
-            onClick={(e) =>
-                e.target.classList.contains("modal") &&
-                closePlaylistsModal(playlistsDispatch)
-            }
+            onClick={(e) => {
+                const target = e.target as HTMLDivElement;
+                target.classList.contains("modal") &&
+                    closePlaylistsModal(playlistsDispatch);
+            }}
             style={{
-                display: modalOpen ? "flex" : "none",
+                display: modalSettings.modalOpen ? "flex" : "none",
             }}>
             <div className="modal__body bg-white br-2">
                 <div className="modal__header px-3 py-1">
@@ -53,33 +51,38 @@ export const PlaylistModal = () => {
                             <label className=" w-100p my-1">
                                 <input
                                     type="checkbox"
-                                    checked={inPlaylist(playlist, currentVideo)}
-                                    onChange={(e) =>
-                                        e.target.checked
-                                            ? addToPlaylist(
-                                                  token,
-                                                  currentVideo,
-                                                  playlist,
-                                                  playlistsDispatch,
-                                                  showLoader,
-                                                  hideLoader
-                                              )
-                                            : removeFromPlaylist(
-                                                  token,
-                                                  currentVideo,
-                                                  playlist,
-                                                  playlistsDispatch,
-                                                  showLoader,
-                                                  hideLoader
-                                              )
-                                    }></input>{" "}
+                                    checked={inPlaylist(
+                                        playlist,
+                                        modalSettings.currentVideo
+                                    )}
+                                    onChange={(e) => {
+                                        if (modalSettings.modalOpen) {
+                                            e.target.checked
+                                                ? addToPlaylist(
+                                                      token!,
+                                                      modalSettings.currentVideo,
+                                                      playlist,
+                                                      playlistsDispatch,
+                                                      showLoader,
+                                                      hideLoader
+                                                  )
+                                                : removeFromPlaylist(
+                                                      token!,
+                                                      modalSettings.currentVideo,
+                                                      playlist,
+                                                      playlistsDispatch,
+                                                      showLoader,
+                                                      hideLoader
+                                                  );
+                                        }
+                                    }}></input>{" "}
                                 {playlist.title}
                             </label>
                             <button
                                 className="btn btn--icon btn--secondary br-2 ms-auto"
                                 onClick={() =>
                                     deletePlaylist(
-                                        token,
+                                        token!,
                                         playlist,
                                         playlistsDispatch,
                                         showLoader,
@@ -114,11 +117,9 @@ export const PlaylistModal = () => {
                         onClick={() => {
                             newPlaylistName &&
                                 createPlaylist(
-                                    token,
+                                    token!,
                                     {
-                                        playlist: {
-                                            title: newPlaylistName,
-                                        },
+                                        title: newPlaylistName,
                                     },
                                     playlistsDispatch,
                                     showLoader,

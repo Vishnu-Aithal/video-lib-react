@@ -2,13 +2,22 @@ import { PlaylistType } from "types/Playlist";
 import { VideoDetails } from "types/VideoDetails";
 import { PlaylistActions } from "./playlistActionTypes";
 
-export interface PlaylistState {
+export interface ModalOpen {
     playlists: PlaylistType[];
     modalSettings: {
-        currentVideo: VideoDetails | {};
-        modalOpen: boolean;
+        currentVideo: VideoDetails;
+        modalOpen: true;
     };
 }
+export interface ModalClose {
+    playlists: PlaylistType[];
+    modalSettings: {
+        currentVideo: {};
+        modalOpen: false;
+    };
+}
+
+export type PlaylistState = ModalOpen | ModalClose;
 
 export const initialState: PlaylistState = {
     playlists: [],
@@ -21,7 +30,7 @@ export const initialState: PlaylistState = {
 export const playlistsReducerFunction = (
     state: PlaylistState,
     action: PlaylistActions
-) => {
+): PlaylistState => {
     const type = action.type;
     switch (type) {
         case "LOAD_PLAYLISTS":

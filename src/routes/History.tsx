@@ -3,7 +3,7 @@ import { useUserData } from "contexts/user-context";
 import { clearHistory } from "utility-functions/userHandler";
 import { useAuth } from "contexts/auth-context";
 import { useLoader } from "contexts/loader-context";
-export const History = () => {
+export const History: React.FC = () => {
     const {
         userState: { history },
         userDispatch,
@@ -20,7 +20,7 @@ export const History = () => {
                         className="btn btn--secondary"
                         onClick={() =>
                             clearHistory(
-                                token,
+                                token!,
                                 userDispatch,
                                 showLoader,
                                 hideLoader

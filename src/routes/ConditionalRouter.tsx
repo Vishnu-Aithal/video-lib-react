@@ -14,7 +14,7 @@ import {
 } from "routes";
 import { ProtectedAuth, ProtectedRoute } from "./ProtectedRoute";
 
-export const ConditionalRouter = () => {
+export const ConditionalRouter: React.FC = () => {
     const {
         authState: { isLoggedIn },
     } = useAuth();

@@ -2,9 +2,9 @@ import { signInHandler } from "utility-functions/authHandler";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "contexts/auth-context";
 import { useLoader } from "contexts/loader-context";
-export const SignInForm = () => {
+export const SignInForm: React.FC = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+    const locationState = useLocation().state as { from: string };
     const { authDispatch } = useAuth();
     const { showLoader, hideLoader } = useLoader();
     return (
@@ -12,16 +12,20 @@ export const SignInForm = () => {
             <form
                 onSubmit={async (e) => {
                     e.preventDefault();
+                    const target = e.target as HTMLFormElement & {
+                        email: HTMLInputElement;
+                        password: HTMLInputElement;
+                    };
                     const response = await signInHandler(
-                        e.target.email.value,
-                        e.target.password.value,
+                        target.email.value,
+                        target.password.value,
                         showLoader,
                         hideLoader
                     );
                     if (response) {
-                        if (location.state) {
+                        if (locationState) {
                             debugger;
-                            navigate(location.state.from);
+                            navigate(locationState.from);
                         } else {
                             navigate("/");
                         }
@@ -54,7 +58,7 @@ export const SignInForm = () => {
                         name="password"
                         id="password"
                         placeholder="Enter Password"
-                        minLength="8"
+                        minLength={8}
                         required
                     />
                     <label className="input__float-label" htmlFor="password">
@@ -80,9 +84,9 @@ export const SignInForm = () => {
                             hideLoader
                         );
                         if (response) {
-                            if (location.state) {
+                            if (locationState) {
                                 debugger;
-                                navigate(location.state.from);
+                                navigate(locationState.from);
                             } else {
                                 navigate("/");
                             }

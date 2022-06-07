@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { usePlaylists } from "contexts/playlist-context";
-export const SideBar = () => {
+export const SideBar: React.FC = () => {
     const [mainCollapsed, setMainCollapsed] = useState(true);
     const [subCollapsed, setSubCollapsed] = useState(true);
     const {

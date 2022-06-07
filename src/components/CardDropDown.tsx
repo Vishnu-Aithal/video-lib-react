@@ -4,13 +4,24 @@ import {
     inWatchlater,
     removeFromWatchlater,
 } from "utility-functions/userHandler";
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useAuth } from "contexts/auth-context";
 import { useUserData } from "contexts/user-context";
 import { useLoader } from "contexts/loader-context";
 import { usePlaylists } from "contexts/playlist-context";
 import { useNavigate, useLocation } from "react-router-dom";
-export const CardDropDown = ({ dropDown, setDropDown, video }) => {
+import { VideoDetails } from "types/VideoDetails";
+
+interface Props {
+    dropDown: boolean;
+    setDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+    video: VideoDetails;
+}
+export const CardDropDown: React.FC<Props> = ({
+    dropDown,
+    setDropDown,
+    video,
+}) => {
     const {
         userState: { watchlater },
         userDispatch,
@@ -22,12 +33,12 @@ export const CardDropDown = ({ dropDown, setDropDown, video }) => {
     const { playlistsDispatch } = usePlaylists();
     const navigate = useNavigate();
     const location = useLocation();
-    const ref = useRef();
-    useEffect(() => ref.current.focus(), []);
+    const ref = useRef<HTMLUListElement>(null);
+    useEffect(() => ref.current!.focus(), []);
 
     return (
         <ul
-            tabIndex="-1"
+            tabIndex={-1}
             ref={ref}
             onBlur={() => setDropDown(false)}
             className={`card__drop-down list-group shadow-sm br-1 ${
@@ -53,7 +64,7 @@ export const CardDropDown = ({ dropDown, setDropDown, video }) => {
                     onClick={() => {
                         isLoggedIn
                             ? addToWatchlater(
-                                  token,
+                                  token!,
                                   video,
                                   userDispatch,
                                   showLoader,
@@ -74,7 +85,7 @@ export const CardDropDown = ({ dropDown, setDropDown, video }) => {
                     onClick={() => {
                         isLoggedIn
                             ? removeFromWatchlater(
-                                  token,
+                                  token!,
                                   video,
                                   userDispatch,
                                   showLoader,

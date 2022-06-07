@@ -1,7 +1,7 @@
 import { Card } from "components/Card";
 import { useUserData } from "contexts/user-context";
 
-export const LikedVideos = () => {
+export const LikedVideos: React.FC = () => {
     const {
         userState: { likes },
     } = useUserData();

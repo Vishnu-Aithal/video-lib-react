@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const Hero = ({
+export const Hero: React.FC<{ backgroundImage?: string }> = ({
     backgroundImage = "https://picsum.photos/1920/1080",
 }) => {
     return (

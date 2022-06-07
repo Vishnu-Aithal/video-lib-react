@@ -35,17 +35,25 @@ export const resetPlaylists = (
     playlistsDispatch: React.Dispatch<PlaylistActions>
 ) => playlistsDispatch({ type: "RESET_PLAYLISTS" });
 
-export const inPlaylist = (playlist: PlaylistType, video: VideoDetails) =>
-    playlist.videos.findIndex(
-        (playlistVideo) => playlistVideo._id === video._id
-    ) !== -1;
+export const inPlaylist = (
+    playlist: PlaylistType,
+    video: VideoDetails | {}
+) => {
+    if ("_id" in video) {
+        return (
+            playlist.videos.findIndex(
+                (playlistVideo) => playlistVideo._id === video._id
+            ) !== -1
+        );
+    }
+};
 
 export const playlistNameExists = (playlists: PlaylistType[], name: string) =>
     playlists.findIndex(({ title }) => title === name) !== -1;
 
 export const createPlaylist = async (
     token: string,
-    playlistData: PlaylistType,
+    playlistData: Partial<PlaylistType>,
     playlistsDispatch: React.Dispatch<PlaylistActions>,
     showLoader: ShowLoader,
     hideLoader: HideLoader
@@ -54,11 +62,15 @@ export const createPlaylist = async (
         showLoader("Creating New PLaylist");
         const {
             data: { playlists },
-        } = await axios.post("/api/user/playlists", playlistData, {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.post(
+            "/api/user/playlists",
+            { playlist: playlistData },
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
 
         playlistsDispatch({ type: "SET_PLAYLISTS", payload: playlists });
     } catch (error) {

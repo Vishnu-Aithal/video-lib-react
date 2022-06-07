@@ -11,7 +11,7 @@ import {
     playlistNameExists,
 } from "utility-functions/playlistHandler";
 
-export const Playlists = () => {
+export const Playlists: React.FC = () => {
     const {
         playlistsState: { playlists },
         playlistsDispatch,
@@ -50,12 +50,11 @@ export const Playlists = () => {
                         onClick={() => {
                             newPlaylistName &&
                                 createPlaylist(
-                                    token,
+                                    token!,
                                     {
-                                        playlist: {
-                                            title: newPlaylistName,
-                                        },
+                                        title: newPlaylistName,
                                     },
+
                                     playlistsDispatch,
                                     showLoader,
                                     hideLoader

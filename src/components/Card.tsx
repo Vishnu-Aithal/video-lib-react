@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { CardDropDown } from "components/CardDropDown";
+import { CardDropDown } from "./CardDropDown";
 import { useUserData } from "contexts/user-context";
 import { useLoader } from "contexts/loader-context";
 import { usePlaylists } from "contexts/playlist-context";
@@ -15,19 +15,29 @@ import {
 } from "utility-functions/userHandler";
 import { removeFromPlaylist } from "utility-functions/playlistHandler";
 import { useAuth } from "contexts/auth-context";
-export const Card = ({
-    type,
-    badge,
-    data = {
-        _id: 123456,
-        category: "dummy",
-        description: "Lorem Ipsum Doler Amut",
-        img: { src: "https://picsum.photos/1280/720", alt: "random" },
-        title: "Title",
-        creator: "Creator",
-    },
-    playlistData = {},
-}) => {
+import { CategoryDetails, VideoDetails } from "types/VideoDetails";
+import { PlaylistType } from "types/Playlist";
+
+interface VideoCardProps {
+    type: "liked" | "history" | "later" | "listing";
+    badge?: string;
+    data: VideoDetails;
+}
+interface CategoryCardProps {
+    type: "category";
+    data: CategoryDetails;
+    badge?: string;
+}
+interface PlaylistCardProps {
+    type: "playlist";
+    data: VideoDetails;
+    badge?: string;
+    playlistData: PlaylistType;
+}
+type CardProps = VideoCardProps | CategoryCardProps | PlaylistCardProps;
+
+export const Card: React.FC<CardProps> = (props) => {
+    const { type, badge, data } = props;
     const navigate = useNavigate();
 
     const {
@@ -55,7 +65,7 @@ export const Card = ({
                     className="card__dismiss"
                     onClick={() =>
                         removeFromLikes(
-                            token,
+                            token!,
                             data,
                             userDispatch,
                             showLoader,
@@ -70,7 +80,7 @@ export const Card = ({
                     className="card__dismiss"
                     onClick={() =>
                         removeFromHistory(
-                            token,
+                            token!,
                             data,
                             userDispatch,
                             showLoader,
@@ -85,7 +95,7 @@ export const Card = ({
                     className="card__dismiss"
                     onClick={() =>
                         removeFromWatchlater(
-                            token,
+                            token!,
                             data,
                             userDispatch,
                             showLoader,
@@ -100,9 +110,9 @@ export const Card = ({
                     className="card__dismiss"
                     onClick={() =>
                         removeFromPlaylist(
-                            token,
+                            token!,
                             data,
-                            playlistData,
+                            props.playlistData,
                             playlistsDispatch,
                             showLoader,
                             hideLoader
@@ -125,8 +135,11 @@ export const Card = ({
                 </div>
 
                 <div className="card__text-wrapper">
-                    <h3 className="card__heading">{data.title}</h3>
+                    {type !== "category" && (
+                        <h3 className="card__heading">{data.title}</h3>
+                    )}
                     <p className="text-semi-bold text-gray">{`by ${data.creator}`}</p>
+
                     <p className="mt-3">
                         {data.description.length > 100
                             ? data.description.substring(0, 100) + "..."
@@ -151,11 +164,12 @@ export const Card = ({
                         <a
                             href={data.url}
                             target="_blank"
+                            rel="noreferrer"
                             className="btn btn--primary br-1 w-100p btn--link"
                             onClick={() => {
                                 !inHistory(history, data) &&
                                     isLoggedIn &&
-                                    addToHistory(token, data, userDispatch);
+                                    addToHistory(token!, data, userDispatch);
                             }}>
                             Watch Now
                         </a>
@@ -165,7 +179,7 @@ export const Card = ({
                                     className="btn btn--icon br-2 ms-auto ms-1"
                                     onClick={() =>
                                         removeFromLikes(
-                                            token,
+                                            token!,
                                             data,
                                             userDispatch,
                                             showLoader,
@@ -180,7 +194,7 @@ export const Card = ({
                                     onClick={() =>
                                         isLoggedIn
                                             ? addToLikes(
-                                                  token,
+                                                  token!,
                                                   data,
                                                   userDispatch,
                                                   showLoader,

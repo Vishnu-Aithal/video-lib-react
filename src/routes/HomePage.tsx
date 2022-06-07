@@ -3,13 +3,13 @@ import { Hero } from "components/Hero";
 import "styles/home-page.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { CategoryDetails } from "types/VideoDetails";
 
-export const HomePage = () => {
-    const [data, setData] = useState([]);
+export const HomePage: React.FC = () => {
+    const [data, setData] = useState<CategoryDetails[]>([]);
     useEffect(() => {
         (async () => {
             const {
-                status,
                 data: { categories },
             } = await axios.get("/api/categories");
             setData(categories);
@@ -22,7 +22,7 @@ export const HomePage = () => {
             <div className="categories">
                 {data.map((category) => (
                     <Card
-                        key={category.id}
+                        key={category._id}
                         type="category"
                         data={{ ...category, creator: category.categoryName }}
                     />

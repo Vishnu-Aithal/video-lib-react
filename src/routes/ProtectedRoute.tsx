@@ -1,6 +1,8 @@
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 
-export const ProtectedRoute = ({ isLoggedIn }) => {
+export const ProtectedRoute: React.FC<{ isLoggedIn: boolean }> = ({
+    isLoggedIn,
+}) => {
     const location = useLocation();
     return isLoggedIn ? (
         <Outlet />
@@ -9,6 +11,8 @@ export const ProtectedRoute = ({ isLoggedIn }) => {
     );
 };
 
-export const ProtectedAuth = ({ isLoggedIn }) => {
+export const ProtectedAuth: React.FC<{ isLoggedIn: boolean }> = ({
+    isLoggedIn,
+}) => {
     return !isLoggedIn ? <Outlet /> : <Navigate to="/" replace />;
 };

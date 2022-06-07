@@ -3,12 +3,13 @@ import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { VideoDetails } from "types/VideoDetails";
 
-export const Browse = () => {
+export const Browse: React.FC = () => {
     const categories = ["All", "Veritasium", "Kurzgesagt", "VSauce"];
     const { category } = useParams();
-    const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
+    const [data, setData] = useState<VideoDetails[]>([]);
+    const [filteredData, setFilteredData] = useState<VideoDetails[]>([]);
     useEffect(() => {
         (async () => {
             const {
@@ -18,14 +19,16 @@ export const Browse = () => {
         })();
     }, []);
     useEffect(() => {
-        category.toLowerCase() === "all"
-            ? setFilteredData(data)
-            : setFilteredData(
-                  data.filter(
-                      ({ creator }) =>
-                          creator.toLowerCase() === category.toLowerCase()
-                  )
-              );
+        if (typeof category === "string") {
+            category.toLowerCase() === "all"
+                ? setFilteredData(data)
+                : setFilteredData(
+                      data.filter(
+                          ({ creator }) =>
+                              creator.toLowerCase() === category.toLowerCase()
+                      )
+                  );
+        }
     }, [category, data]);
     return (
         <>

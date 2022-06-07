@@ -1,7 +1,7 @@
 import { Card } from "components/Card";
 import { useUserData } from "contexts/user-context";
 
-export const WatchLater = () => {
+export const WatchLater: React.FC = () => {
     const {
         userState: { watchlater },
     } = useUserData();

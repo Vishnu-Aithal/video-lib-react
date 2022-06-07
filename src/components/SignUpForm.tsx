@@ -10,11 +10,17 @@ export const SignUpForm = () => {
         <form
             onSubmit={async (e) => {
                 e.preventDefault();
+                const target = e.target as HTMLFormElement & {
+                    email: HTMLInputElement;
+                    password: HTMLInputElement;
+                    firstName: HTMLInputElement;
+                    lastName: HTMLInputElement;
+                };
                 const response = await signUpHandler(
-                    e.target.email.value,
-                    e.target.password.value,
-                    e.target.firstName.value,
-                    e.target.lastName.value,
+                    target.email.value,
+                    target.password.value,
+                    target.firstName.value,
+                    target.lastName.value,
                     showLoader,
                     hideLoader
                 );
@@ -76,7 +82,7 @@ export const SignUpForm = () => {
                     name="password"
                     id="password"
                     placeholder="Enter New Password"
-                    minLength="8"
+                    minLength={8}
                     required
                 />
                 <label className="input__float-label" htmlFor="password">
@@ -92,7 +98,7 @@ export const SignUpForm = () => {
                     name="password"
                     id="password2"
                     placeholder="Confirm Password"
-                    minLength="8"
+                    minLength={8}
                     required
                 />
                 <label className="input__float-label" htmlFor="password">
