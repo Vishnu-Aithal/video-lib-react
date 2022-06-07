@@ -1,10 +1,11 @@
 import axios from "axios";
+import { HideLoader, ShowLoader } from "contexts/loader-context";
 
 export const signInHandler = async (
-    email,
-    password,
-    showLoader,
-    hideLoader
+    email: string,
+    password: string,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     showLoader("Signing In");
     try {
@@ -29,12 +30,12 @@ export const signInHandler = async (
     }
 };
 export const signUpHandler = async (
-    email,
-    password,
-    firstName,
-    lastName,
-    showLoader,
-    hideLoader
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     showLoader("Signing Up");
     try {
@@ -57,7 +58,10 @@ export const signUpHandler = async (
         hideLoader();
     }
 };
-export const signOutHandler = (showLoader, hideLoader) => {
+export const signOutHandler = (
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
+) => {
     showLoader("Signing Out");
     localStorage.removeItem("token");
     localStorage.removeItem("userId");

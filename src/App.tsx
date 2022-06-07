@@ -5,7 +5,7 @@ import { SideBar } from "components/SideBar";
 import { Loader } from "components/Loader";
 import { PlaylistModal } from "components/PlaylistModal";
 
-function App() {
+const App: React.FC = () => {
     return (
         <div className="App">
             <Loader />
@@ -19,6 +19,6 @@ function App() {
             </main>
         </div>
     );
-}
+};
 
 export default App;

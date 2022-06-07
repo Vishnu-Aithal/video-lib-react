@@ -1,16 +1,19 @@
 import axios from "axios";
+import { HideLoader, ShowLoader } from "contexts/loader-context";
+import React from "react";
+import { UserActions } from "reducer-functions/UserReducer/userActionTypes";
+import { VideoDetails } from "types/VideoDetails";
 
 export const loadUserData = async (
-    token,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Getting Liked Videos");
         const {
             data: { likes },
-            likesStatus,
         } = await axios.get("/api/user/likes", {
             headers: {
                 authorization: token,
@@ -18,7 +21,6 @@ export const loadUserData = async (
         });
         const {
             data: { watchlater },
-            watchlaterStatus,
         } = await axios.get("/api/user/watchlater", {
             headers: {
                 authorization: token,
@@ -26,7 +28,6 @@ export const loadUserData = async (
         });
         const {
             data: { history },
-            historyStatus,
         } = await axios.get("/api/user/history", {
             headers: {
                 authorization: token,
@@ -43,32 +44,31 @@ export const loadUserData = async (
     }
 };
 
-export const resetUserData = (userDispatch) =>
+export const resetUserData = (userDispatch: React.Dispatch<UserActions>) =>
     userDispatch({ type: "RESET_USER_DATA" });
 
-export const inLikes = (likes, video) =>
+export const inLikes = (likes: VideoDetails[], video: VideoDetails) =>
     likes.findIndex((likedVideo) => likedVideo._id === video._id) !== -1;
 
-export const inWatchlater = (watchlater, video) =>
+export const inWatchlater = (watchlater: VideoDetails[], video: VideoDetails) =>
     watchlater.findIndex(
         (watchlaterVideo) => watchlaterVideo._id === video._id
     ) !== -1;
 
-export const inHistory = (history, video) =>
+export const inHistory = (history: VideoDetails[], video: VideoDetails) =>
     history.findIndex((historyVideo) => historyVideo._id === video._id) !== -1;
 
 export const addToLikes = async (
-    token,
-    video,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Adding To Likes");
         const {
             data: { likes },
-            likesStatus,
         } = await axios.post(
             "/api/user/likes",
             { video },
@@ -87,17 +87,16 @@ export const addToLikes = async (
 };
 
 export const removeFromLikes = async (
-    token,
-    video,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Removing From Likes");
         const {
             data: { likes },
-            likesStatus,
         } = await axios.delete(`/api/user/likes/${video._id}`, {
             headers: {
                 authorization: token,
@@ -112,17 +111,16 @@ export const removeFromLikes = async (
 };
 
 export const addToWatchlater = async (
-    token,
-    video,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Adding To Watchlater");
         const {
             data: { watchlater },
-            watchlaterStatus,
         } = await axios.post(
             "/api/user/watchlater",
             { video },
@@ -141,17 +139,16 @@ export const addToWatchlater = async (
 };
 
 export const removeFromWatchlater = async (
-    token,
-    video,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Removing From Watchlater");
         const {
             data: { watchlater },
-            watchlaterStatus,
         } = await axios.delete(`/api/user/watchlater/${video._id}`, {
             headers: {
                 authorization: token,
@@ -165,11 +162,14 @@ export const removeFromWatchlater = async (
     }
 };
 
-export const addToHistory = async (token, video, userDispatch) => {
+export const addToHistory = async (
+    token: string,
+    video: VideoDetails,
+    userDispatch: React.Dispatch<UserActions>
+) => {
     try {
         const {
             data: { history },
-            historyStatus,
         } = await axios.post(
             "/api/user/history",
             { video },
@@ -186,17 +186,16 @@ export const addToHistory = async (token, video, userDispatch) => {
 };
 
 export const removeFromHistory = async (
-    token,
-    video,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Removing From History");
         const {
             data: { history },
-            historyStatus,
         } = await axios.delete(`/api/user/history/${video._id}`, {
             headers: {
                 authorization: token,
@@ -211,16 +210,15 @@ export const removeFromHistory = async (
 };
 
 export const clearHistory = async (
-    token,
-    userDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    userDispatch: React.Dispatch<UserActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Clearing History");
         const {
             data: { history },
-            historyStatus,
         } = await axios.delete("/api/user/history/all", {
             headers: {
                 authorization: token,

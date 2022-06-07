@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useState, useCallback } from "react";
 
-type ShowLoader = (text: string) => void;
-type HideLoader = () => void;
+export type ShowLoader = (text: string) => void;
+export type HideLoader = () => void;
 interface LoaderContextValue {
     loader: Loader;
     showLoader: ShowLoader;

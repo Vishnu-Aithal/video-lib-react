@@ -17,11 +17,10 @@ interface ResetPlaylists {
 
 interface OpenModal {
     type: "OPEN_MODAL";
-    payload: { currentVideo: VideoDetails; modalOpen: true };
+    payload: VideoDetails;
 }
 interface CloseModel {
     type: "CLOSE_MODAL";
-    payload: { currentVideo: {}; modalOpen: false };
 }
 
 export type PlaylistActions =

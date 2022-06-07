@@ -1,16 +1,20 @@
 import axios from "axios";
+import { HideLoader, ShowLoader } from "contexts/loader-context";
+import React from "react";
+import { PlaylistActions } from "reducer-functions/PlaylistReducer/playlistActionTypes";
+import { PlaylistType } from "types/Playlist";
+import { VideoDetails } from "types/VideoDetails";
 
 export const loadPlaylists = async (
-    token,
-    playlistsDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    playlistsDispatch: React.Dispatch<PlaylistActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Getting Playlists");
         const {
             data: { playlists },
-            playlistsStatus,
         } = await axios.get("/api/user/playlists", {
             headers: {
                 authorization: token,
@@ -27,27 +31,29 @@ export const loadPlaylists = async (
         hideLoader();
     }
 };
-export const resetPlaylists = (playlistsDispatch) =>
-    playlistsDispatch({ type: "RESET_PLAYLISTS" });
+export const resetPlaylists = (
+    playlistsDispatch: React.Dispatch<PlaylistActions>
+) => playlistsDispatch({ type: "RESET_PLAYLISTS" });
 
-export const inPlaylist = (playlist, video) =>
+export const inPlaylist = (playlist: PlaylistType, video: VideoDetails) =>
     playlist.videos.findIndex(
         (playlistVideo) => playlistVideo._id === video._id
     ) !== -1;
-export const playlistNameExists = (playlists, name) =>
+
+export const playlistNameExists = (playlists: PlaylistType[], name: string) =>
     playlists.findIndex(({ title }) => title === name) !== -1;
+
 export const createPlaylist = async (
-    token,
-    playlistData,
-    playlistsDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    playlistData: PlaylistType,
+    playlistsDispatch: React.Dispatch<PlaylistActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Creating New PLaylist");
         const {
             data: { playlists },
-            playlistsStatus,
         } = await axios.post("/api/user/playlists", playlistData, {
             headers: {
                 authorization: token,
@@ -63,17 +69,16 @@ export const createPlaylist = async (
 };
 
 export const deletePlaylist = async (
-    token,
-    playlist,
-    playlistsDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    playlist: PlaylistType,
+    playlistsDispatch: React.Dispatch<PlaylistActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Deleting Playlist");
         const {
             data: { playlists },
-            playlistsStatus,
         } = await axios.delete(`/api/user/playlists/${playlist._id}`, {
             headers: {
                 authorization: token,
@@ -88,18 +93,17 @@ export const deletePlaylist = async (
 };
 
 export const addToPlaylist = async (
-    token,
-    video,
-    playlistData,
-    playlistsDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    playlistData: PlaylistType,
+    playlistsDispatch: React.Dispatch<PlaylistActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Adding To Playlist");
         const {
             data: { playlist },
-            playlistsStatus,
         } = await axios.post(
             `/api/user/playlists/${playlistData._id}`,
             { video },
@@ -119,18 +123,17 @@ export const addToPlaylist = async (
 };
 
 export const removeFromPlaylist = async (
-    token,
-    video,
-    playlistData,
-    playlistsDispatch,
-    showLoader,
-    hideLoader
+    token: string,
+    video: VideoDetails,
+    playlistData: PlaylistType,
+    playlistsDispatch: React.Dispatch<PlaylistActions>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
 ) => {
     try {
         showLoader("Removing To Playlist");
         const {
             data: { playlist },
-            playlistsStatus,
         } = await axios.delete(
             `/api/user/playlists/${playlistData._id}/${video._id}`,
             {
@@ -148,8 +151,11 @@ export const removeFromPlaylist = async (
     }
 };
 
-export const closePlaylistsModal = (playlistsDispatch) =>
-    playlistsDispatch({ type: "CLOSE_MODAL" });
+export const closePlaylistsModal = (
+    playlistsDispatch: React.Dispatch<PlaylistActions>
+) => playlistsDispatch({ type: "CLOSE_MODAL" });
 
-export const openPlaylistsModal = (video, playlistsDispatch) =>
-    playlistsDispatch({ type: "OPEN_MODAL", payload: video });
+export const openPlaylistsModal = (
+    video: VideoDetails,
+    playlistsDispatch: React.Dispatch<PlaylistActions>
+) => playlistsDispatch({ type: "OPEN_MODAL", payload: video });
