@@ -1,0 +1,9 @@
+export { Browse } from "routes/Browse/Browse";
+export { History } from "routes/History/History";
+export { HomePage } from "routes/HomePage/HomePage";
+export { WatchLater } from "routes/WatchLater/WatchLater";
+export { LikedVideos } from "routes/LikedVideos/LikedVideos";
+export { Playlists } from "routes/Playlists/Playlists";
+export { SignIn } from "routes/AuthPages/SignIn";
+export { SignUp } from "routes/AuthPages/SignUp";
+export { NotFound } from "routes/NotFound";
