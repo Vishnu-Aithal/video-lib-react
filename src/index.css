@@ -48,5 +48,6 @@ aside {
 @media only screen and (max-width: 768px) {
     .content {
         width: 100vw;
+        height: calc(100vh - 6rem);
     }
 }

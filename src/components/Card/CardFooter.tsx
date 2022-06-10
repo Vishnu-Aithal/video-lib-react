@@ -4,7 +4,7 @@ import { useLoader } from "contexts/loader-context";
 import { useToast } from "contexts/toast-context";
 import { useUserData } from "contexts/user-context";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CategoryDetails, VideoDetails } from "types/VideoDetails";
 import {
     addToHistory,
@@ -61,9 +61,8 @@ export const CardFooter: React.FC<CardFooterProps> = ({ type, data }) => {
                 </>
             ) : (
                 <>
-                    <a
-                        href={data.url}
-                        target="_blank"
+                    <Link
+                        to={`/watch/${data._id}`}
                         rel="noreferrer"
                         className="btn btn--primary br-1 w-100p btn--link"
                         onClick={() => {
@@ -72,7 +71,7 @@ export const CardFooter: React.FC<CardFooterProps> = ({ type, data }) => {
                             }
                         }}>
                         Watch Now
-                    </a>
+                    </Link>
                     {type !== "liked" &&
                         (inLikes(likes, data) ? (
                             <button

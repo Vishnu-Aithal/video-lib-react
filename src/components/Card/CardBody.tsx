@@ -18,10 +18,13 @@ export const CardBody: React.FC<CardBodyProps> = ({ type, data }) => {
         <div className="card__body p-2">
             <div className="card__img-wrapper">
                 <img
-                    onClick={() =>
-                        type === "category" &&
-                        navigate(`browse/${data.categoryName}`)
-                    }
+                    onClick={() => {
+                        if (type === "category") {
+                            navigate(`browse/${data.categoryName}`);
+                        } else {
+                            navigate(`/watch/${data._id}`);
+                        }
+                    }}
                     className="card__img"
                     src={data.img.src}
                     alt={data.img.alt}></img>

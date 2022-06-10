@@ -13,6 +13,7 @@ import {
     NotFound,
 } from "routes";
 import { ProtectedAuth, ProtectedRoute } from "./ProtectedRoute";
+import { SingleVideoPage } from "./SingleVideoPage/SingleVideoPage";
 
 export const ConditionalRouter: React.FC = () => {
     const {
@@ -27,6 +28,7 @@ export const ConditionalRouter: React.FC = () => {
                     element={<Navigate to="/browse/all" replace />}
                 />
                 <Route path="/browse/:category" element={<Browse />} />
+                <Route path="/watch/:videoId" element={<SingleVideoPage />} />
 
                 <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
                     <Route path="/liked-videos" element={<LikedVideos />} />
