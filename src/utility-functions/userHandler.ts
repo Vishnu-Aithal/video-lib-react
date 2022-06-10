@@ -38,7 +38,7 @@ export const loadUserData = async (
             payload: { likes, watchlater, history },
         });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -80,7 +80,7 @@ export const addToLikes = async (
         );
         userDispatch({ type: "SET_LIKES", payload: likes });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -104,7 +104,7 @@ export const removeFromLikes = async (
         });
         userDispatch({ type: "SET_LIKES", payload: likes });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -132,7 +132,7 @@ export const addToWatchlater = async (
         );
         userDispatch({ type: "SET_WATCHLATER", payload: watchlater });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -156,7 +156,7 @@ export const removeFromWatchlater = async (
         });
         userDispatch({ type: "SET_WATCHLATER", payload: watchlater });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -181,7 +181,7 @@ export const addToHistory = async (
         );
         userDispatch({ type: "SET_HISTORY", payload: history });
     } catch (error) {
-        console.log(error);
+        return error;
     }
 };
 
@@ -203,7 +203,7 @@ export const removeFromHistory = async (
         });
         userDispatch({ type: "SET_HISTORY", payload: history });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -226,7 +226,7 @@ export const clearHistory = async (
         });
         userDispatch({ type: "SET_HISTORY", payload: history });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }

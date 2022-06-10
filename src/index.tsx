@@ -9,6 +9,7 @@ import { AuthProvider } from "contexts/auth-context";
 import { LoaderProvider } from "contexts/loader-context";
 import { UserProvider } from "contexts/user-context";
 import { PlaylistProvider } from "contexts/playlist-context";
+import { ToastProvider } from "contexts/toast-context";
 
 // Call make Server
 makeServer();
@@ -23,6 +24,7 @@ root.render(
             React.StrictMode,
             BrowserRouter,
             LoaderProvider,
+            ToastProvider,
             AuthProvider,
             UserProvider,
             PlaylistProvider,

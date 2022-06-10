@@ -26,7 +26,7 @@ export const loadPlaylists = async (
             payload: playlists,
         });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -74,7 +74,7 @@ export const createPlaylist = async (
 
         playlistsDispatch({ type: "SET_PLAYLISTS", payload: playlists });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -98,7 +98,7 @@ export const deletePlaylist = async (
         });
         playlistsDispatch({ type: "SET_PLAYLISTS", payload: playlists });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -128,7 +128,7 @@ export const addToPlaylist = async (
 
         playlistsDispatch({ type: "SET_PLAYLIST", payload: playlist });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -157,7 +157,7 @@ export const removeFromPlaylist = async (
 
         playlistsDispatch({ type: "SET_PLAYLIST", payload: playlist });
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }

@@ -1,9 +1,9 @@
-import "./App.css";
-import { TopNav } from "components/TopNav";
+import { TopNav } from "components/Layout/TopNav";
 import { Outlet } from "react-router-dom";
-import { SideBar } from "components/SideBar";
-import { Loader } from "components/Loader";
-import { PlaylistModal } from "components/PlaylistModal";
+import { SideBar } from "components/Layout/SideBar";
+import { Loader } from "components/Loader/Loader";
+import { PlaylistModal } from "components/PlaylistModal/PlaylistModal";
+import { ToastContainer } from "components/Toast/ToastContainer";
 
 const App: React.FC = () => {
     return (
@@ -16,6 +16,7 @@ const App: React.FC = () => {
                     <Outlet />
                 </div>
                 <PlaylistModal />
+                <ToastContainer />
             </main>
         </div>
     );

@@ -1,9 +1,0 @@
-.playlists-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-.playlist {
-    display: flex;
-    min-width: 100px;
-    width: fit-content;
-}

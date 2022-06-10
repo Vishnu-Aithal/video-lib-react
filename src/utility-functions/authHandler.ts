@@ -1,9 +1,13 @@
 import axios from "axios";
 import { HideLoader, ShowLoader } from "contexts/loader-context";
+import React from "react";
+import { AuthActionTypes } from "reducer-functions/AuthReducer/authActionTypes";
 
 export const signInHandler = async (
     email: string,
     password: string,
+    authDispatch: React.Dispatch<AuthActionTypes>,
+    rememberMe: boolean,
     showLoader: ShowLoader,
     hideLoader: HideLoader
 ) => {
@@ -19,12 +23,17 @@ export const signInHandler = async (
         if (status === 200) {
             const token = encodedToken;
             const userId = foundUser._id;
-            localStorage.setItem("token", token);
-            localStorage.setItem("userId", userId);
-            return { token, userId };
+            if (rememberMe) {
+                localStorage.setItem("token", token);
+                localStorage.setItem("userId", userId);
+            }
+            authDispatch({
+                type: "LOGIN",
+                payload: { token: encodedToken, userId: userId },
+            });
         }
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
@@ -34,6 +43,7 @@ export const signUpHandler = async (
     password: string,
     firstName: string,
     lastName: string,
+    authDispatch: React.Dispatch<AuthActionTypes>,
     showLoader: ShowLoader,
     hideLoader: HideLoader
 ) => {
@@ -48,12 +58,13 @@ export const signUpHandler = async (
         if (response.status === 201) {
             const token = response.data.encodedToken;
             const userId = response.data.createdUser._id;
-            localStorage.setItem("token", token);
-            localStorage.setItem("userId", userId);
-            return { token, userId };
+            authDispatch({
+                type: "LOGIN",
+                payload: { token, userId },
+            });
         }
     } catch (error) {
-        console.log(error);
+        return error;
     } finally {
         hideLoader();
     }
