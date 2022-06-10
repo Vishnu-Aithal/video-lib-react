@@ -103,8 +103,8 @@ export const SignInForm: React.FC = () => {
                     className="btn btn--primary br-1 mt-2 "
                     onClick={async () => {
                         const error = await signInHandler(
-                            "adarshbalika@gmail.com",
-                            "adarshBalika123",
+                            "user@test.com",
+                            "TestUser123",
                             authDispatch,
                             rememberMe,
                             showLoader,
