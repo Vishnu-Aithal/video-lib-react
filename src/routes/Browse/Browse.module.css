@@ -1,0 +1,16 @@
+.categories-container {
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.categories-container input {
+    font-size: 1rem;
+    width: 20rem;
+    max-width: 80%;
+    margin: 0 0.5rem;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border: solid 2px lightgray;
+}
