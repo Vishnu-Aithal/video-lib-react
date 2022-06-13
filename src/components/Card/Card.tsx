@@ -1,19 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
-import { CardDropDown } from "../CardDropDown/CardDropDown";
-import { useUserData } from "contexts/user-context";
-import { useLoader } from "contexts/loader-context";
-import {
-    inLikes,
-    inHistory,
-    addToLikes,
-    removeFromLikes,
-    addToHistory,
-} from "utility-functions/userHandler";
-import { useAuth } from "contexts/auth-context";
 import { CategoryDetails, VideoDetails } from "types/VideoDetails";
 import { PlaylistType } from "types/Playlist";
-import { useToast } from "contexts/toast-context";
 import { CardDismiss } from "./CardDismiss";
 import { CardBody } from "./CardBody";
 import { CardFooter } from "./CardFooter";
