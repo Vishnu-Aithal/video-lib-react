@@ -92,7 +92,7 @@ export const videos = [
             src: "https://i.ytimg.com/vi/zHL9GP_B30E/hqdefault.jpg",
             alt: "Camera",
         },
-        url: "https://www.youtube.com/watch?v=kTXTPe3wahc",
+        url: "https://www.youtube.com/watch?v=zHL9GP_B30E",
     },
     {
         _id: uuid(),
@@ -103,7 +103,7 @@ export const videos = [
             src: "https://i.ytimg.com/vi/rYXdsOEWBj0/hqdefault.jpg",
             alt: "Fallen Banana",
         },
-        url: "https://www.youtube.com/watch?v=kTXTPe3wahc",
+        url: "https://www.youtube.com/watch?v=rYXdsOEWBj0",
     },
     {
         _id: uuid(),
@@ -114,6 +114,6 @@ export const videos = [
             src: "https://i.ytimg.com/vi/G5s4-Kak49o/hqdefault.jpg",
             alt: "Torn File Icon",
         },
-        url: "https://www.youtube.com/watch?v=kTXTPe3wahc",
+        url: "hhttps://www.youtube.com/watch?v=G5s4-Kak49o",
     },
 ];

@@ -17,11 +17,6 @@ type CardBodyProps = VideoCardBodyProps | CategoryCardBodyProps;
 
 export const CardBody: React.FC<CardBodyProps> = ({ type, data }) => {
     const navigate = useNavigate();
-    const { authState } = useAuth();
-    const {
-        userDispatch,
-        userState: { history },
-    } = useUserData();
     return (
         <div className="card__body p-2">
             <div className="card__img-wrapper">
@@ -31,17 +26,6 @@ export const CardBody: React.FC<CardBodyProps> = ({ type, data }) => {
                             navigate(`browse/${data.categoryName}`);
                         } else {
                             navigate(`/watch/${data._id}`);
-
-                            if (
-                                authState.isLoggedIn &&
-                                !inHistory(history, data)
-                            ) {
-                                addToHistory(
-                                    authState.token,
-                                    data,
-                                    userDispatch
-                                );
-                            }
                         }
                     }}
                     className="card__img"

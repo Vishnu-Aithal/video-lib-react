@@ -1,3 +1,9 @@
+interface comment {
+    _id: string;
+    body: string;
+    author: string;
+    createdAt: string;
+}
 export interface VideoDetails {
     _id: string;
     title: string;
@@ -8,6 +14,7 @@ export interface VideoDetails {
         alt: string;
     };
     url: string;
+    comments: comment[];
 }
 
 export interface CategoryDetails {

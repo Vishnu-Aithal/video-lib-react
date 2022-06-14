@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { VideoDetails } from "types/VideoDetails";
 import classes from "./Browse.module.css";
+import { useLoader } from "contexts/loader-context";
+import { useToast } from "contexts/toast-context";
 
 export const Browse: React.FC = () => {
     const categories = ["All", "Veritasium", "Kurzgesagt", "VSauce"];
@@ -12,12 +14,21 @@ export const Browse: React.FC = () => {
     const [search, setSearch] = useState("");
     const [data, setData] = useState<VideoDetails[]>([]);
     const [filteredData, setFilteredData] = useState<VideoDetails[]>([]);
+    const { showLoader, hideLoader } = useLoader();
+    const { showToast } = useToast();
     useEffect(() => {
         (async () => {
-            const {
-                data: { videos },
-            } = await axios.get("/api/videos");
-            setData(videos);
+            try {
+                showLoader("Fetching Videos");
+                const {
+                    data: { videos },
+                } = await axios.get("/api/videos");
+                setData(videos);
+            } catch (error) {
+                showToast({ title: "Failed to fetch Videos", type: "error" });
+            } finally {
+                hideLoader();
+            }
         })();
     }, []);
     useEffect(() => {
