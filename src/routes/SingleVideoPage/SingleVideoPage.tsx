@@ -9,22 +9,36 @@ import { useLoader } from "contexts/loader-context";
 import { useParams } from "react-router-dom";
 import { SingleVideoPageButtons } from "./SingleVideoPageButtons";
 import { Card } from "components/Card/Card";
+import { VideoComment } from "components/VideoComments/VideoComments";
+import { useAuth } from "contexts/auth-context";
+import { useUserData } from "contexts/user-context";
+import { addToHistory, inHistory } from "utility-functions/userHandler";
 
 export const SingleVideoPage: React.FC = () => {
     const { videoId } = useParams();
     const [videoData, setVideoData] = useState<VideoDetails | null>(null);
     const [moreVideos, setMorevideos] = useState<VideoDetails[] | null>(null);
+
     const [error, setError] = useState(false);
 
     const { showLoader, hideLoader } = useLoader();
+    const { authState } = useAuth();
+    const {
+        userState: { history },
+        userDispatch,
+    } = useUserData();
 
     useEffect(() => {
         (async () => {
             try {
-                const videoIdURI = encodeURI(videoId!);
-                showLoader("Fetching Video");
-                const response = await axios.get(`/api/video/${videoIdURI}`);
-                setVideoData(response.data.video);
+                if (!videoData || videoId !== videoData._id) {
+                    const videoIdURI = encodeURI(videoId!);
+                    showLoader("Fetching Video");
+                    const response = await axios.get(
+                        `/api/video/${videoIdURI}`
+                    );
+                    setVideoData(response.data.video);
+                }
                 const {
                     data: { videos },
                 } = (await axios.get("/api/videos")) as {
@@ -34,14 +48,30 @@ export const SingleVideoPage: React.FC = () => {
                     (video) => video.creator === videoData?.creator
                 );
                 setMorevideos(sameCreatorVideos);
+
+                if (
+                    videoData &&
+                    authState.isLoggedIn &&
+                    !inHistory(history, videoData)
+                ) {
+                    addToHistory(authState.token, videoData, userDispatch);
+                }
             } catch (error) {
                 setError(true);
             } finally {
                 hideLoader();
             }
         })();
-    }, [videoId, showLoader, hideLoader, videoData?.creator]);
-    console.log(moreVideos);
+    }, [
+        videoId,
+        showLoader,
+        hideLoader,
+        videoData?.creator,
+        authState,
+        history,
+        userDispatch,
+        videoData,
+    ]);
     return videoData && moreVideos ? (
         <div className={classes["page-container"]}>
             <div className={classes["video-container"]}>
@@ -56,13 +86,18 @@ export const SingleVideoPage: React.FC = () => {
                     <h1 className="text-lg text-bold">{videoData.title}</h1>
                     <SingleVideoPageButtons videoData={videoData} />
                 </div>
-                <h3 className={classes["comments"]}>Comments</h3>
+                <VideoComment
+                    videoData={videoData}
+                    setVideoData={setVideoData}
+                />
             </div>
             <div className={classes["more-videos"]}>
                 <h2>Explore More</h2>
-                {moreVideos.map((video) => (
-                    <Card type="listing" data={video} key={video._id} />
-                ))}
+                {moreVideos
+                    .filter((video) => video._id !== videoData._id)
+                    .map((video) => (
+                        <Card type="listing" data={video} key={video._id} />
+                    ))}
             </div>
         </div>
     ) : (

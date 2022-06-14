@@ -1,6 +1,6 @@
 import axios from "axios";
 import { HideLoader, ShowLoader } from "contexts/loader-context";
-import React from "react";
+import React, { SetStateAction } from "react";
 import { UserActions } from "reducer-functions/UserReducer/userActionTypes";
 import { VideoDetails } from "types/VideoDetails";
 
@@ -225,6 +225,35 @@ export const clearHistory = async (
             },
         });
         userDispatch({ type: "SET_HISTORY", payload: history });
+    } catch (error) {
+        return error;
+    } finally {
+        hideLoader();
+    }
+};
+
+export const addCommenttoVideo = async (
+    token: string,
+    comment: string,
+    videoId: string,
+    setVideo: React.Dispatch<SetStateAction<VideoDetails | null>>,
+    showLoader: ShowLoader,
+    hideLoader: HideLoader
+) => {
+    try {
+        showLoader("Adding Comment");
+        const {
+            data: { video },
+        } = await axios.post(
+            `/api/video/comment/${videoId}`,
+            { comment },
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
+        setVideo(video);
     } catch (error) {
         return error;
     } finally {

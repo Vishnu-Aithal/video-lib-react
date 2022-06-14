@@ -28,7 +28,7 @@ type CardFooterProps = VideoCardFooterProps | CategoryCardFooterProps;
 export const CardFooter: React.FC<CardFooterProps> = ({ type, data }) => {
     const [dropDown, setDropDown] = useState(false);
     const {
-        userState: { likes, history },
+        userState: { likes },
         userDispatch,
     } = useUserData();
     const navigate = useNavigate();
@@ -64,12 +64,7 @@ export const CardFooter: React.FC<CardFooterProps> = ({ type, data }) => {
                     <Link
                         to={`/watch/${data._id}`}
                         rel="noreferrer"
-                        className="btn btn--primary br-1 w-100p btn--link"
-                        onClick={() => {
-                            if (!inHistory(history, data) && isLoggedIn) {
-                                addToHistory(token!, data, userDispatch);
-                            }
-                        }}>
+                        className="btn btn--primary br-1 w-100p btn--link">
                         Watch Now
                     </Link>
                     {type !== "liked" &&

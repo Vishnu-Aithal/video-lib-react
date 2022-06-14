@@ -1,4 +1,6 @@
+import { requiresAuth } from "backend/utils/authUtils";
 import { Response } from "miragejs";
+import { v4 } from "uuid";
 
 /**
  * All the routes related to Videos are present here.
@@ -40,6 +42,32 @@ export const getVideoHandler = function (schema, request) {
     const { videoId } = request.params;
     try {
         const video = schema.videos.findBy({ _id: videoId }).attrs;
+        return new Response(200, {}, { video });
+    } catch (error) {
+        return new Response(
+            500,
+            {},
+            {
+                error,
+            }
+        );
+    }
+};
+export const addCommentHandler = function (schema, request) {
+    const user = requiresAuth.call(this, request);
+    console.log(user);
+    const { videoId } = request.params;
+    const { comment } = JSON.parse(request.requestBody);
+
+    try {
+        const video = schema.videos.findBy({ _id: videoId }).attrs;
+        video.comments.push({
+            author: user.firstName,
+            body: comment,
+            _id: v4(),
+            createdAt: new Date().toLocaleString(),
+        });
+        this.db.videos.update({ _id: videoId }, { comments: video.comments });
         return new Response(200, {}, { video });
     } catch (error) {
         return new Response(
