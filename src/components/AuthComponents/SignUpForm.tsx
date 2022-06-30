@@ -91,7 +91,8 @@ export const SignUpForm = () => {
                     name="password"
                     id="password"
                     placeholder="Enter New Password"
-                    minLength={8}
+                    title="minimum 8 characters"
+                    pattern=".{8,}"
                     required
                 />
                 <label className="input__float-label" htmlFor="password">
@@ -100,31 +101,9 @@ export const SignUpForm = () => {
                 <span className="input__required-text"></span>
             </div>
 
-            <div className="input">
-                <input
-                    className="input__field"
-                    type="password"
-                    name="password"
-                    id="password2"
-                    placeholder="Confirm Password"
-                    minLength={8}
-                    required
-                />
-                <label className="input__float-label" htmlFor="password">
-                    Confirm Password
-                </label>
-                <span className="input__required-text"></span>
-            </div>
-            <div className="input mx-auto">
-                <input type="checkbox" name="tandc" id="" required />
-                <label className="text-sm" htmlFor="">
-                    I accept all terms and conditions
-                </label>
-            </div>
-            <input
-                className="btn btn--primary br-1 mt-2 w-100p"
-                type="submit"
-                value="Sign Up"></input>
+            <button className="btn btn--primary br-1 mt-2 w-100p" type="submit">
+                Sign Up
+            </button>
         </form>
     );
 };

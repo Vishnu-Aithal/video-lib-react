@@ -71,7 +71,8 @@ export const SignInForm: React.FC = () => {
                         name="password"
                         id="password"
                         placeholder="Enter Password"
-                        minLength={8}
+                        title="minimum 8 characters"
+                        pattern=".{8,}"
                         required
                     />
                     <label className="input__float-label" htmlFor="password">
@@ -92,14 +93,16 @@ export const SignInForm: React.FC = () => {
                         Remember Me
                     </label>
                 </div>
-                <input
+                <button
                     className="btn btn--primary br-1 mt-2 w-100p"
-                    type="submit"
-                    value="Sign In"></input>
+                    type="submit">
+                    Sign In
+                </button>
                 <p className={`${classes["helper-text"]} mt-3`}>
                     Not a member? <Link to={"/sign-up"}>Sign Up</Link>
                 </p>
                 <button
+                    type="button"
                     className="btn btn--primary br-1 mt-2 "
                     onClick={async () => {
                         const error = await signInHandler(
