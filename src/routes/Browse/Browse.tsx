@@ -76,7 +76,7 @@ export const Browse: React.FC = () => {
                     </NavLink>
                 ))}
                 <input
-                    type="text"
+                    type="search"
                     placeholder=" Search Title, Desciption"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
