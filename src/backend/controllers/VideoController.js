@@ -55,7 +55,6 @@ export const getVideoHandler = function (schema, request) {
 };
 export const addCommentHandler = function (schema, request) {
     const user = requiresAuth.call(this, request);
-    console.log(user);
     const { videoId } = request.params;
     const { comment } = JSON.parse(request.requestBody);
 
