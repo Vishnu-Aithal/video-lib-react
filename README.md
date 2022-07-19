@@ -6,7 +6,7 @@
 
 ---
 
-Live Link - https://video-lib-react-git-dev-vishnu-aithal.vercel.app/
+Live Link - https://video-lib-react.vercel.app/
 
 ---
 
