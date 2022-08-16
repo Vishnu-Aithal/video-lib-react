@@ -11,7 +11,9 @@ export const HomePage: React.FC = () => {
         (async () => {
             const {
                 data: { categories },
-            } = await axios.get("/api/categories");
+            } = await axios.get(
+                `https://${process.env.REACT_APP_BACKEND_URL}/api/categories`
+            );
             setData(categories);
         })();
     }, []);

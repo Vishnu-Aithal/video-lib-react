@@ -70,7 +70,7 @@ export const VideoComment: React.FC<VideoCommentProps> = ({
                 </button>
             </form>
 
-            {videoData.comments.length !== 0 ? (
+            {videoData.comments && videoData?.comments?.length !== 0 ? (
                 videoData.comments.map((comment) => (
                     <div className={classes["comment"]}>
                         <h4>{comment.author}</h4>

@@ -32,16 +32,18 @@ export const SingleVideoPage: React.FC = () => {
         (async () => {
             try {
                 if (!videoData || videoId !== videoData._id) {
-                    const videoIdURI = encodeURI(videoId!);
                     showLoader("Fetching Video");
                     const response = await axios.get(
-                        `/api/video/${videoIdURI}`
+                        `https://${process.env.REACT_APP_BACKEND_URL}/api/videos/${videoId}`
                     );
+                    console.log("response");
                     setVideoData(response.data.video);
                 }
                 const {
                     data: { videos },
-                } = (await axios.get("/api/videos")) as {
+                } = (await axios.get(
+                    `https://${process.env.REACT_APP_BACKEND_URL}/api/videos`
+                )) as {
                     data: { videos: VideoDetails[] };
                 };
                 const sameCreatorVideos = videos.filter(
@@ -86,6 +88,7 @@ export const SingleVideoPage: React.FC = () => {
                     <h1 className="text-lg text-bold">{videoData.title}</h1>
                     <SingleVideoPageButtons videoData={videoData} />
                 </div>
+
                 <VideoComment
                     videoData={videoData}
                     setVideoData={setVideoData}

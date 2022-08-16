@@ -16,10 +16,14 @@ export const signInHandler = async (
         const {
             status,
             data: { encodedToken, foundUser },
-        } = await axios.post("/api/auth/login", {
-            email: email,
-            password: password,
-        });
+        } = await axios.post(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
+            {
+                email: email,
+                password: password,
+            }
+        );
+
         if (status === 200) {
             const token = encodedToken;
             const userId = foundUser._id;
@@ -33,6 +37,7 @@ export const signInHandler = async (
             });
         }
     } catch (error) {
+        console.log(error);
         return error;
     } finally {
         hideLoader();
@@ -49,12 +54,15 @@ export const signUpHandler = async (
 ) => {
     showLoader("Signing Up");
     try {
-        const response = await axios.post("/api/auth/signup", {
-            email,
-            password,
-            firstName,
-            lastName,
-        });
+        const response = await axios.post(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`,
+            {
+                email,
+                password,
+                firstName,
+                lastName,
+            }
+        );
         if (response.status === 201) {
             const token = response.data.encodedToken;
             const userId = response.data.createdUser._id;

@@ -15,11 +15,14 @@ export const loadPlaylists = async (
         showLoader("Getting Playlists");
         const {
             data: { playlists },
-        } = await axios.get("/api/user/playlists", {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.get(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
 
         playlistsDispatch({
             type: "LOAD_PLAYLISTS",
@@ -63,7 +66,7 @@ export const createPlaylist = async (
         const {
             data: { playlists },
         } = await axios.post(
-            "/api/user/playlists",
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists`,
             { playlist: playlistData },
             {
                 headers: {
@@ -91,11 +94,14 @@ export const deletePlaylist = async (
         showLoader("Deleting Playlist");
         const {
             data: { playlists },
-        } = await axios.delete(`/api/user/playlists/${playlist._id}`, {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.delete(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlist._id}`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         playlistsDispatch({ type: "SET_PLAYLISTS", payload: playlists });
     } catch (error) {
         return error;
@@ -117,7 +123,7 @@ export const addToPlaylist = async (
         const {
             data: { playlist },
         } = await axios.post(
-            `/api/user/playlists/${playlistData._id}`,
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlistData._id}`,
             { video },
             {
                 headers: {
@@ -147,7 +153,7 @@ export const removeFromPlaylist = async (
         const {
             data: { playlist },
         } = await axios.delete(
-            `/api/user/playlists/${playlistData._id}/${video._id}`,
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlistData._id}/${video._id}`,
             {
                 headers: {
                     authorization: token,

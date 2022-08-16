@@ -14,25 +14,34 @@ export const loadUserData = async (
         showLoader("Getting Liked Videos");
         const {
             data: { likes },
-        } = await axios.get("/api/user/likes", {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.get(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/likes`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         const {
             data: { watchlater },
-        } = await axios.get("/api/user/watchlater", {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.get(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         const {
             data: { history },
-        } = await axios.get("/api/user/history", {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.get(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         userDispatch({
             type: "LOAD_USER_DATA",
             payload: { likes, watchlater, history },
@@ -70,7 +79,7 @@ export const addToLikes = async (
         const {
             data: { likes },
         } = await axios.post(
-            "/api/user/likes",
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/likes`,
             { video },
             {
                 headers: {
@@ -97,11 +106,14 @@ export const removeFromLikes = async (
         showLoader("Removing From Likes");
         const {
             data: { likes },
-        } = await axios.delete(`/api/user/likes/${video._id}`, {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.delete(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/likes/${video._id}`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         userDispatch({ type: "SET_LIKES", payload: likes });
     } catch (error) {
         return error;
@@ -122,7 +134,7 @@ export const addToWatchlater = async (
         const {
             data: { watchlater },
         } = await axios.post(
-            "/api/user/watchlater",
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater`,
             { video },
             {
                 headers: {
@@ -149,11 +161,14 @@ export const removeFromWatchlater = async (
         showLoader("Removing From Watchlater");
         const {
             data: { watchlater },
-        } = await axios.delete(`/api/user/watchlater/${video._id}`, {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.delete(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater/${video._id}`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         userDispatch({ type: "SET_WATCHLATER", payload: watchlater });
     } catch (error) {
         return error;
@@ -171,7 +186,7 @@ export const addToHistory = async (
         const {
             data: { history },
         } = await axios.post(
-            "/api/user/history",
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history`,
             { video },
             {
                 headers: {
@@ -196,11 +211,14 @@ export const removeFromHistory = async (
         showLoader("Removing From History");
         const {
             data: { history },
-        } = await axios.delete(`/api/user/history/${video._id}`, {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.delete(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history/${video._id}`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         userDispatch({ type: "SET_HISTORY", payload: history });
     } catch (error) {
         return error;
@@ -219,11 +237,14 @@ export const clearHistory = async (
         showLoader("Clearing History");
         const {
             data: { history },
-        } = await axios.delete("/api/user/history/all", {
-            headers: {
-                authorization: token,
-            },
-        });
+        } = await axios.delete(
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history/all`,
+            {
+                headers: {
+                    authorization: token,
+                },
+            }
+        );
         userDispatch({ type: "SET_HISTORY", payload: history });
     } catch (error) {
         return error;
@@ -245,7 +266,7 @@ export const addCommenttoVideo = async (
         const {
             data: { video },
         } = await axios.post(
-            `/api/video/comment/${videoId}`,
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/video/comment/${videoId}`,
             { comment },
             {
                 headers: {
