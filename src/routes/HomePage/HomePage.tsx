@@ -12,7 +12,7 @@ export const HomePage: React.FC = () => {
             const {
                 data: { categories },
             } = await axios.get(
-                `https://${process.env.REACT_APP_BACKEND_URL}/api/categories`
+                `http://${process.env.REACT_APP_BACKEND_URL}/api/categories`
             );
             setData(categories);
         })();

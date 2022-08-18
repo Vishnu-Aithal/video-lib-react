@@ -15,7 +15,7 @@ export const loadUserData = async (
         const {
             data: { likes },
         } = await axios.get(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/likes`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/likes`,
             {
                 headers: {
                     authorization: token,
@@ -25,7 +25,7 @@ export const loadUserData = async (
         const {
             data: { watchlater },
         } = await axios.get(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater`,
             {
                 headers: {
                     authorization: token,
@@ -35,7 +35,7 @@ export const loadUserData = async (
         const {
             data: { history },
         } = await axios.get(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/history`,
             {
                 headers: {
                     authorization: token,
@@ -79,7 +79,7 @@ export const addToLikes = async (
         const {
             data: { likes },
         } = await axios.post(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/likes`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/likes`,
             { video },
             {
                 headers: {
@@ -107,7 +107,7 @@ export const removeFromLikes = async (
         const {
             data: { likes },
         } = await axios.delete(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/likes/${video._id}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/likes/${video._id}`,
             {
                 headers: {
                     authorization: token,
@@ -134,7 +134,7 @@ export const addToWatchlater = async (
         const {
             data: { watchlater },
         } = await axios.post(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater`,
             { video },
             {
                 headers: {
@@ -162,7 +162,7 @@ export const removeFromWatchlater = async (
         const {
             data: { watchlater },
         } = await axios.delete(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater/${video._id}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/watchlater/${video._id}`,
             {
                 headers: {
                     authorization: token,
@@ -186,7 +186,7 @@ export const addToHistory = async (
         const {
             data: { history },
         } = await axios.post(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/history`,
             { video },
             {
                 headers: {
@@ -212,7 +212,7 @@ export const removeFromHistory = async (
         const {
             data: { history },
         } = await axios.delete(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history/${video._id}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/history/${video._id}`,
             {
                 headers: {
                     authorization: token,
@@ -238,7 +238,7 @@ export const clearHistory = async (
         const {
             data: { history },
         } = await axios.delete(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/history/all`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/history/all`,
             {
                 headers: {
                     authorization: token,
@@ -266,7 +266,7 @@ export const addCommenttoVideo = async (
         const {
             data: { video },
         } = await axios.post(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/video/comment/${videoId}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/video/comment/${videoId}`,
             { comment },
             {
                 headers: {

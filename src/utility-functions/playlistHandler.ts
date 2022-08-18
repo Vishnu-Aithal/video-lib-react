@@ -16,7 +16,7 @@ export const loadPlaylists = async (
         const {
             data: { playlists },
         } = await axios.get(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists`,
             {
                 headers: {
                     authorization: token,
@@ -66,7 +66,7 @@ export const createPlaylist = async (
         const {
             data: { playlists },
         } = await axios.post(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists`,
             { playlist: playlistData },
             {
                 headers: {
@@ -95,7 +95,7 @@ export const deletePlaylist = async (
         const {
             data: { playlists },
         } = await axios.delete(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlist._id}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlist._id}`,
             {
                 headers: {
                     authorization: token,
@@ -123,7 +123,7 @@ export const addToPlaylist = async (
         const {
             data: { playlist },
         } = await axios.post(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlistData._id}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlistData._id}`,
             { video },
             {
                 headers: {
@@ -153,7 +153,7 @@ export const removeFromPlaylist = async (
         const {
             data: { playlist },
         } = await axios.delete(
-            `https://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlistData._id}/${video._id}`,
+            `http://${process.env.REACT_APP_BACKEND_URL}/api/user/playlists/${playlistData._id}/${video._id}`,
             {
                 headers: {
                     authorization: token,

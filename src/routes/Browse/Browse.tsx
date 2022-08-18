@@ -23,7 +23,7 @@ export const Browse: React.FC = () => {
                 const {
                     data: { videos },
                 } = await axios.get(
-                    `https://${process.env.REACT_APP_BACKEND_URL}/api/videos`
+                    `http://${process.env.REACT_APP_BACKEND_URL}/api/videos`
                 );
                 setData(videos);
             } catch (error) {
