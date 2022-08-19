@@ -34,7 +34,7 @@ export const SingleVideoPage: React.FC = () => {
                 if (!videoData || videoId !== videoData._id) {
                     showLoader("Fetching Video");
                     const response = await axios.get(
-                        `http://${process.env.REACT_APP_BACKEND_URL}/api/videos/${videoId}`
+                        `https://${process.env.REACT_APP_BACKEND_URL}/api/videos/${videoId}`
                     );
                     console.log("response");
                     setVideoData(response.data.video);
@@ -42,7 +42,7 @@ export const SingleVideoPage: React.FC = () => {
                 const {
                     data: { videos },
                 } = (await axios.get(
-                    `http://${process.env.REACT_APP_BACKEND_URL}/api/videos`
+                    `https://${process.env.REACT_APP_BACKEND_URL}/api/videos`
                 )) as {
                     data: { videos: VideoDetails[] };
                 };

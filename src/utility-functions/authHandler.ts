@@ -17,7 +17,7 @@ export const signInHandler = async (
             status,
             data: { encodedToken, foundUser },
         } = await axios.post(
-            `http://${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
             {
                 email: email,
                 password: password,
@@ -55,7 +55,7 @@ export const signUpHandler = async (
     showLoader("Signing Up");
     try {
         const response = await axios.post(
-            `http://${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`,
+            `https://${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`,
             {
                 email,
                 password,
